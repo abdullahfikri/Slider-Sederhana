@@ -36,7 +36,7 @@ const activateDot = function (slide) {
     .classList.add("dots__dot--active");
 };
 const next = function () {
-  if (currentSlide === maxSlide - 1) {
+  if (currentSlide >= maxSlide - 1) {
     currentSlide = 0;
   } else {
     currentSlide++;
@@ -90,8 +90,10 @@ document.addEventListener("keydown", function (e) {
 dotContainer.addEventListener("click", function (e) {
   if (e.target.classList.contains("dots__dot")) {
     const { slide } = e.target.dataset;
-
-    goToSlide(slide);
-    activateDot(slide);
+    currentSlide = slide;
+    goToSlide(currentSlide);
+    activateDot(currentSlide);
+    clearInterval(intervalNext);
+    intervalNext = setInterval(next, 4000);
   }
 });
